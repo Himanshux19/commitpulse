@@ -1,10 +1,17 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { trackUser } from './tracking';
 
+const originalSendBeacon = navigator.sendBeacon;
+
 describe('trackUser', () => {
   afterEach(() => {
     vi.restoreAllMocks();
     vi.unstubAllGlobals();
+
+    Object.defineProperty(navigator, 'sendBeacon', {
+      value: originalSendBeacon,
+      configurable: true,
+    });
   });
 
   it('uses sendBeacon when available', () => {
