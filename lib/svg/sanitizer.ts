@@ -115,17 +115,14 @@ export function sanitizeGoogleFontUrl(fontName: string | undefined | null): stri
   return encodeURIComponent(cleaned).replace(/%20/g, '+');
 }
 
-/**
- * Calculates the relative luminance of a hex color (without leading '#').
- */
 export function getLuminance(hex: string): number {
-  let cleanHex = hex.trim().replace(/^#+/, '');
-  if (cleanHex.length === 3 || cleanHex.length === 4) {
-    cleanHex = `${cleanHex[0]}${cleanHex[0]}${cleanHex[1]}${cleanHex[1]}${cleanHex[2]}${cleanHex[2]}`;
+  let normalized = hex.trim().replace(/^#/, '');
+  if (normalized.length === 3 || normalized.length === 4) {
+    normalized = `${normalized[0]}${normalized[0]}${normalized[1]}${normalized[1]}${normalized[2]}${normalized[2]}`;
   }
-  const r = parseInt(cleanHex.slice(0, 2), 16) / 255 || 0;
-  const g = parseInt(cleanHex.slice(2, 4), 16) / 255 || 0;
-  const b = parseInt(cleanHex.slice(4, 6), 16) / 255 || 0;
+  const r = parseInt(normalized.slice(0, 2), 16) / 255 || 0;
+  const g = parseInt(normalized.slice(2, 4), 16) / 255 || 0;
+  const b = parseInt(normalized.slice(4, 6), 16) / 255 || 0;
 
   const [R, G, B] = [r, g, b].map((c) =>
     c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4)
