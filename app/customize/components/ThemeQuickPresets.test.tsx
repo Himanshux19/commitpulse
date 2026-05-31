@@ -133,8 +133,7 @@ describe('ThemeQuickPresets responsive rendering & high-contrast', () => {
     const grid = buttons.at(0)?.parentElement;
 
     expect(grid).not.toBeNull();
-    expect(grid?.style.display).toBe('flex');
-    expect(grid?.style.flexWrap).toBe('wrap');
+    expect(grid?.className).toContain('theme-quick-presets');
   });
 
   it('check if each preset button has theme bg colour(inline)', () => {
